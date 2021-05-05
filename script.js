@@ -1,5 +1,3 @@
-console.log("good luck, m8");
-
 const wrongGuessDiv = document.querySelector(".wrong-guesses");
 const correctGuessDiv = document.querySelector(".correct-guesses");
 const guessBtn = document.querySelector(".guess-button");
@@ -72,6 +70,21 @@ const loadJoke = () => {
   });
 };
 
+//hide punchline
+const hidePunchline = () => {
+  let { punchline } = appState;
+  const splittedPunchline = punchline.split("");
+  const hidden = [];
+  const letters = /^[a-zA-Z]+$/;
+  splittedPunchline.forEach((letter) => {
+    //chech if letter is a blank space or a letter and push it to the hidden array
+    letter === " "
+      ? hidden.push(` `)
+      : letter.match(letters) && hidden.push("-");
+  });
+  return hidden;
+};
+
 //render wrong guess count
 const renderWrongGuessCount = () => {
   wrongGuessCountSpan.innerText = "";
@@ -96,21 +109,6 @@ const correctGuess = (splittedAnswer, letter, currentGuessStatus) => {
   letterIndexes.forEach((e) => (currentGuessStatus[e] = letter));
   letterInput.value = "";
   return (appState.currentGuessStatus = currentGuessStatus);
-};
-
-//hide punchline
-const hidePunchline = () => {
-  let { punchline } = appState;
-  const splittedPunchline = punchline.split("");
-  const hidden = [];
-  const letters = /^[a-zA-Z]+$/;
-  splittedPunchline.forEach((letter) => {
-    //chech if letter is a blank space or a letter and push it to the hidden array
-    letter === " "
-      ? hidden.push(` `)
-      : letter.match(letters) && hidden.push("-");
-  });
-  return hidden;
 };
 
 //render guess status
@@ -153,7 +151,16 @@ const guessLetter = (letter, correctAnswer, currentGuessStatus) => {
   checkForWin();
 };
 
-// guessLetter("r", punchline, ["k", "-", "-", "n", "-", "l"]);
+const hideHangman = () => {
+  hangman.forEach((el) => el.classList.add("hidden"));
+};
+
+const revealHangman = () => {
+  let idx = appState.wrongGuesses - 1;
+  hangman[idx].classList.remove("hidden");
+};
+
+//add click listeners
 
 guessBtn.addEventListener("click", () => {
   guessLetter(
@@ -164,19 +171,6 @@ guessBtn.addEventListener("click", () => {
   console.log(appState);
 });
 
-const hideHangman = () => {
-  hangman.forEach((el) => el.classList.add("hidden"));
-};
-
-const revealHangman = () => {
-  let idx = appState.wrongGuesses - 1;
-  hangman[idx].classList.remove("hidden");
-};
-
-//game starts > fetch joke > hide joke and create guess status > guessing > win | lose | restart.
-// jokeFetch();
-// hideHangman();
-
 //restart
 
 restartBtn.addEventListener("click", () => {
@@ -185,6 +179,11 @@ restartBtn.addEventListener("click", () => {
 
 const restart = () => {
   appState = {};
+  wrongGuessCountSpan.innerHTML = "";
+  wrongGuessDiv.innerHTML = "";
+  setupDiv.innerHTML = "";
+  guessStatusDiv.innerHTML = "";
+  correctGuessDiv.innerHTML = "";
   hideHangman();
   jokeFetch();
   loadJoke();

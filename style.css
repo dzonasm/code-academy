@@ -57,6 +57,9 @@ line {
   margin-bottom: 1em;
   text-align: center;
 }
+.wrong {
+  display: flex;
+}
 
 button {
   padding: 0.2em 0.5em;
@@ -70,4 +73,8 @@ button {
 
 .wrong-guesses {
   text-align: center;
+  margin: 0 1em;
+}
+.wrong-guesses span {
+  margin: 0 0.2em;
 }
