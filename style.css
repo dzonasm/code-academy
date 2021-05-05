@@ -1,3 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.hangman {
+  display: grid;
+  place-items: center;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 0.8em;
+}
 svg {
   margin: 0 auto;
   border: 1px solid black;
@@ -19,9 +43,31 @@ line {
 .hide {
   visibility: hidden;
 }
-#head {
-}
 
 .hidden {
   display: none;
+}
+
+.setup {
+  margin: 1em 0;
+  text-align: center;
+}
+
+.guess-status {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+button {
+  padding: 0.2em 0.5em;
+}
+
+.ui {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1em;
+}
+
+.wrong-guesses {
+  text-align: center;
 }

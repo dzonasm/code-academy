@@ -14,6 +14,7 @@ const armR = document.querySelector("#armR");
 const legR = document.querySelector("#legR");
 const legL = document.querySelector("#legL");
 const hangman = [head, body, armL, armR, legL, legR];
+const restartBtn = document.querySelector(".restart-button");
 
 let appState = {
   jokeSetup: "",
@@ -56,8 +57,6 @@ const jokeFetch = async () => {
 
   console.log(data.body);
 };
-
-jokeFetch();
 
 const loadJoke = () => {
   //fetch joke
@@ -131,7 +130,9 @@ const checkForWin = () => {
 
 //check for loss
 const checkForLoss = () =>
-  appState.wrongGuesses === 6 ? alert("you lost") : null;
+  appState.wrongGuesses === 6
+    ? alert(`the correct answer was: ${appState.punchline}`)
+    : null;
 
 //make guess
 const guessLetter = (letter, correctAnswer, currentGuessStatus) => {
@@ -173,5 +174,26 @@ const revealHangman = () => {
 };
 
 //game starts > fetch joke > hide joke and create guess status > guessing > win | lose | restart.
+// jokeFetch();
+// hideHangman();
 
-hideHangman();
+//restart
+
+restartBtn.addEventListener("click", () => {
+  restart();
+});
+
+const restart = () => {
+  appState = {};
+  hideHangman();
+  jokeFetch();
+  loadJoke();
+};
+
+const startGame = () => {
+  hideHangman();
+  jokeFetch();
+  loadJoke();
+};
+
+startGame();
